@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Человек</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+
+<h2 th:text="${person.getFullName()}"></h2>
+<p class="text-muted" th:text="'Год рождения: ' + ${person.getYearOfBirth()}"></p>
+
+<h5>Книги:</h5>
+
+<div th:if="${books.isEmpty()}" class="alert alert-info">
+    Человек пока не взял ни одной книги
+</div>
+
+<ul th:if="${!books.isEmpty()}" class="list-group mb-3">
+    <li th:each="book : ${books}" class="list-group-item">
+        <span th:text="${book.getBookTitle() + ', ' + book.getBookAuthor() + ', ' + book.getYearOfBook()}"></span>
+    </li>
+</ul>
+
+<a th:href="@{/people/{personId}/edit(personId=${person.getPersonId()})}" class="btn btn-warning me-2">Редактировать</a>
+
+<form th:method="DELETE" th:action="@{/people/{personId}(personId=${person.getPersonId()})}" class="d-inline">
+    <button type="submit" class="btn btn-danger">Удалить</button>
+</form>
+
+</body>
+</html>
